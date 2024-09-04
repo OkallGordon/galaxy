@@ -1,0 +1,17 @@
+<.header>
+  Video <%= @video.id %>
+  <:subtitle>This is a video record from your database.</:subtitle>
+  <:actions>
+    <.link href={~p"/videos/#{@video}/edit"}>
+      <.button>Edit video</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Url"><%= @video.url %></:item>
+  <:item title="Title"><%= @video.title %></:item>
+  <:item title="Description"><%= @video.description %></:item>
+</.list>
+
+<.back navigate={~p"/videos"}>Back to videos</.back>

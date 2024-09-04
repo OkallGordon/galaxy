@@ -27,6 +27,7 @@ defmodule GalaxyWeb do
       import Plug.Conn
       import Phoenix.Controller
       import Phoenix.LiveView.Router
+      import GalaxyWeb.Auth, only: [authenticate_user: 2]
     end
   end
 
@@ -44,7 +45,8 @@ defmodule GalaxyWeb do
 
       import Plug.Conn
       import GalaxyWeb.Gettext
-
+      import GalaxyWeb.Auth, only: [authenticate_user: 2]
+      alias GalaxyWeb.Routes.Helpers, as: Routes
       unquote(verified_routes())
     end
   end

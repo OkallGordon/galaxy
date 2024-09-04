@@ -1,6 +1,9 @@
 defmodule GalaxyWeb.Auth do
   import Plug.Conn
 
+  import Phoenix.Controller
+
+
   def init(opts), do: opts
 
   def call(conn, _opts) do
@@ -18,4 +21,15 @@ defmodule GalaxyWeb.Auth do
  def logout(conn) do
    configure_session(conn, drop: true)
  end
+
+ def authenticate_user(conn, _opts) do
+   if conn.assigns.current_user do
+     conn
+   else
+    conn
+    |> put_flash(:error, "Sorry you must be logged in to access this page")
+    |> redirect(to: "/")
+    |> halt()
+   end
+  end
 end

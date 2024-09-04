@@ -1,6 +1,8 @@
 defmodule GalaxyWeb.Router do
   use GalaxyWeb, :router
 
+  import GalaxyWeb.Auth, only: [authenticate_user: 2]
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -27,8 +29,14 @@ defmodule GalaxyWeb.Router do
     get "/users/:id", UserController, :show
     delete "/users/:id", UserController, :delete
     resources "/sessions", SessionController, only: [:new, :create, :delete]
+    resources "/videos", VideoController
   end
 
+  scope "/manage", GalaxyWeb do
+    pipe_through [:browser, :authenticate_user]
+
+    resources "/videos", VideoController
+  end
   # Other scopes may use custom stacks.
   # scope "/api", GalaxyWeb do
   #   pipe_through :api

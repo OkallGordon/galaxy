@@ -4,7 +4,7 @@ defmodule GalaxyWeb.UserController do
   alias Galaxy.Accounts
   alias Galaxy.Accounts.User
 
-  plug :authenticate when action in [:index, :show]
+  plug :authenticate_user when action in [:index, :show]
 
   def index(conn, _params) do
     users = Accounts.list_users()
@@ -63,14 +63,4 @@ defmodule GalaxyWeb.UserController do
     |> redirect(to: ~p"/users")
   end
 
-  defp authenticate(conn, _opts) do
-    if conn.assigns.current_user do
-      conn
-    else
-      conn
-      |> put_flash(:error, "Sorry you must be logged in to acces this page")
-      |> redirect(to: ~p"/")
-      |> halt()
-    end
-  end
 end
