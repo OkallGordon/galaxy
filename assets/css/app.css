@@ -1,0 +1,25 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* This file is for your main application CSS */
+.phx-hero {
+    background-color: #000000; /* Light gray background */
+    text-align: center; /* Center align text */
+    padding: 50px 20px; /* Add padding to the section */
+    border-radius: 8px; /* Slightly round the corners */
+  }
+  
+  .phx-hero h1 {
+    font-size: 2.5em; /* Increase the font size of the heading */
+    margin-bottom: 20px; /* Add space below the heading */
+    color: #ffffff; /* Dark gray text */
+  }
+  
+  .phx-hero p {
+    font-size: 1.2em; /* Slightly increase the font size of the paragraph */
+    color: #ffffff; /* Lighter gray text */
+  }
+
+  
+ 
