@@ -10,6 +10,8 @@ defmodule Galaxy.Multimedia do
 
   alias Galaxy.Accounts
 
+  alias Galaxy.Multimedia.Category
+
   @doc """
   Returns the list of videos.
 
@@ -114,5 +116,9 @@ defmodule Galaxy.Multimedia do
   """
   def change_video(%Video{} = video, attrs \\ %{}) do
     Video.changeset(video, attrs)
+  end
+
+  def create_category!(name) do
+    Repo.insert!(%Category{name: name}, on_conflict: :nothing)
   end
 end

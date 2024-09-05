@@ -9,10 +9,9 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
-alias Galaxy.Repo
-alias Galaxy.Accounts.User
 
-%User{name: "Gordon", email: "gordon@example.com"} |> Repo.insert()
-%User{name: "Okoth", email: "okoth@example.com"} |> Repo.insert()
-%User{name: "James", email: "james@example.com"} |> Repo.insert()
-%User{name: "Okall", email: "okall@example.com"} |> Repo.insert()
+alias Galaxy.Multimedia
+
+for category <- ~w(Action Drama Romance Comedy Sci-fi) do
+  Multimedia.create_category!(category)
+end
