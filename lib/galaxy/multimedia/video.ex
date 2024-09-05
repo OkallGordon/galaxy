@@ -6,7 +6,7 @@ defmodule Galaxy.Multimedia.Video do
     field :description, :string
     field :title, :string
     field :url, :string
-    field :user_id, :id
+    belongs_to :user, Galaxy.Accounts.User
 
     timestamps(type: :utc_datetime)
   end
