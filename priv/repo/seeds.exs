@@ -12,6 +12,6 @@
 
 alias Galaxy.Multimedia
 
-for category <- ~w(Action Drama Romance Comedy Sci-fi) do
+for category <- ~w(Action Drama Romance Comedy Sci-fi Horror hello Test) do
   Multimedia.create_category!(category)
 end

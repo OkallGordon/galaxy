@@ -10,4 +10,9 @@ defmodule GalaxyWeb.VideoHTML do
   attr :action, :string, required: true
 
   def video_form(assigns)
-end
+
+  def category_select_options(categories) do
+    for category <- categories, do: {category.name, category.id}
+  end
+
+  end

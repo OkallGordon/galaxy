@@ -2,9 +2,14 @@
   <.error :if={@changeset.action}>
     Oops, something went wrong! Please check the errors below.
   </.error>
-  <strong><.input field={f[:url]} type="text" label="Url" /></strong>
+
+  <.input field={f[:url]} type="text" label="Url" />
   <.input field={f[:title]} type="text" label="Title" />
   <.input field={f[:description]} type="text" label="Description" />
+
+  <.input field={f[:category_id]} type="select" options={Enum.map(@categories, &{&1.name, &1.id})} label="Category" prompt="Select a Category" />
+
+
   <:actions>
     <.button>Save Video</.button>
   </:actions>

@@ -3,6 +3,6 @@
   <:subtitle>Use this form to manage video records in your database.</:subtitle>
 </.header>
 
-<.video_form changeset={@changeset} action={~p"/videos"} />
+<.video_form changeset={@changeset} action={~p"/videos"} categories={@categories} />
 
 <.back navigate={~p"/videos"}>Back to videos</.back>

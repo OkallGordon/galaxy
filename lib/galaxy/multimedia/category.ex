@@ -5,6 +5,7 @@ defmodule Galaxy.Multimedia.Category do
 
   schema "categories" do
     field :name, :string
+    has_many :videos, Galaxy.Multimedia.Video
 
     timestamps(type: :utc_datetime)
   end

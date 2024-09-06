@@ -63,4 +63,5 @@ defmodule GalaxyWeb.UserController do
     |> redirect(to: ~p"/users")
   end
 
+
 end
