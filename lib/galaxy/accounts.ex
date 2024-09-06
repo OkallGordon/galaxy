@@ -116,6 +116,9 @@ defmodule Galaxy.Accounts do
     User.registration_changeset(user, params)
   end
 
+ @doc """
+  Registers a new user.
+  """
   def register_user(attrs \\ %{}) do
     %User{}
     |> User.registration_changeset(attrs)
