@@ -8,6 +8,7 @@ defmodule Galaxy.Accounts do
 
   alias Galaxy.Accounts.User
 
+  alias Pbkdf2
   @doc """
   Returns the list of users.
 
@@ -118,6 +119,7 @@ defmodule Galaxy.Accounts do
   def register_user(attrs \\ %{}) do
     %User{}
     |> User.registration_changeset(attrs)
+    |> put_password_hash()
     |> Repo.insert()
   end
 
@@ -126,8 +128,9 @@ defmodule Galaxy.Accounts do
 
     case user do
       nil -> {:error, "Invalid email or password"}
-      user ->
-        if Pbkdf2.verify_pass(given_password, user.password_hash) do
+      %User{password_hash: nil} -> {:error, "Invalid email or password"}
+      %User{password_hash: password_hash} ->
+        if Pbkdf2.verify_pass(given_password, password_hash) do
           {:ok, user}
         else
           {:error, "Invalid email or password"}
@@ -135,4 +138,12 @@ defmodule Galaxy.Accounts do
     end
   end
 
+  defp put_password_hash(changeset) do
+    case changeset do
+    %Ecto.Changeset{valid?: true, changes: %{password: pass}} ->
+   Ecto.Changeset.put_change(changeset, :password_hash, Pbkdf2.hash_pwd_salt(pass))
+    _ ->
+    changeset
+    end
+  end
 end
