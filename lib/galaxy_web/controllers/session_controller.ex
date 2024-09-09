@@ -7,13 +7,13 @@ defmodule GalaxyWeb.SessionController do
     render(conn, "new.html")
   end
 
-
   def create(conn, %{"user" => %{"email" => email, "password" => password}}) do
     case Accounts.authenticate_by_email_and_pass(email, password) do
       {:ok, user} ->
+        greeting = get_greeting()  # Call the function to get the greeting
         conn
         |> put_session(:user_id, user.id)
-        |> put_flash(:info, "Welcome back!")
+        |> put_flash(:info, "#{greeting},  #{user.name},  welcome back!")  # Use the greeting in the flash message
         |> redirect(to: ~p"/")
 
       {:error, _reason} ->
@@ -23,11 +23,20 @@ defmodule GalaxyWeb.SessionController do
     end
   end
 
+  defp get_greeting do
+    current_hour = :calendar.local_time() |> elem(1) |> elem(0)
 
- def delete(conn, _param) do
-   conn
-   |> configure_session( drop: true)
-   |> put_flash(:info, "You are logged out successfully")
-   |> redirect(to: ~p"/")
- end
+    cond do
+      current_hour < 12 -> "Good morning"
+      current_hour < 18 -> "Good afternoon"
+      true -> "Good evening"
+    end
+  end
+
+  def delete(conn, _params) do
+    conn
+    |> configure_session(drop: true)
+    |> put_flash(:info, "You are logged out successfully")
+    |> redirect(to: ~p"/")
+  end
 end
