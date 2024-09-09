@@ -22,7 +22,7 @@ defmodule Galaxy.Accounts.User do
     |> validate_length(:email, min: 5, max: 20)
     |> validate_format(:email, ~r/@/)
     |> unique_constraint(:email)
-    |> put_password_hash()
+
   end
 
 

@@ -44,6 +44,7 @@ defmodule Galaxy.Accounts do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
+
   @doc """
   Creates a user.
 
@@ -56,6 +57,7 @@ defmodule Galaxy.Accounts do
       {:error, %Ecto.Changeset{}}
 
   """
+
   def create_user(attrs \\ %{}) do
     %User{}
     |> User.changeset(attrs)

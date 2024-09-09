@@ -10,5 +10,6 @@ defmodule Galaxy.Repo.Migrations.CreateUsers do
     timestamps(type: :utc_datetime)
 
   end
+  create_unique_index(users, [:email])
   end
 end
