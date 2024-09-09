@@ -21,7 +21,7 @@ defmodule Galaxy.Accounts.User do
     |> validate_length(:name, min: 4, max: 10)
     |> validate_length(:email, min: 5, max: 20)
     |> validate_format(:email, ~r/@/)
-    |> unique_constraint(:email)
+    |> unique_constraint(:email, message: "This email has been taken")
 
   end
 
