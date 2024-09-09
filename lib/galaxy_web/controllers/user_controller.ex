@@ -25,8 +25,17 @@ defmodule GalaxyWeb.UserController do
         |> redirect(to: ~p"/users/#{user}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
+        conn
+        |> put_flash(:error, "Failed to create user. #{format_errors(changeset)}")
         render(conn, :new, changeset: changeset)
     end
+  end
+
+  defp format_errors(changeset) do
+    Enum.map(changeset.errors, fn {field, {message, _}} ->
+      "#{field} #{message}"
+    end)
+    |> Enum.join(", ")
   end
 
   def show(conn, %{"id" => id}) do

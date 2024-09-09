@@ -6,10 +6,11 @@ defmodule Galaxy.Repo.Migrations.CreateUsers do
     add :name, :string
     add :email, :string
     add :password_hash, :string
+    add :user_id, references(:users, on_delete: :delete_all)
+    create unique_index(:users, [:email])
 
     timestamps(type: :utc_datetime)
 
   end
-  create_unique_index(users, [:email])
-  end
+end
 end
