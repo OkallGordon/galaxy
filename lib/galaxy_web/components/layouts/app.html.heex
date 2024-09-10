@@ -30,20 +30,17 @@
         <li>
           <form action={~p"/sessions/#{@current_user.id}"} method="post" class="inline">
             <input type="hidden" name="_method" value="delete">
-            <button type="submit" class="hover:text-zinc-700">Log out</button><br>
+            <button type="submit" class="hover:text-zinc-700">Log out</button>
             <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
-
           </form>
         </li>
       <% else %>
         <li>
           <a href={~p"/users/new"} class="hover:text-zinc-700">Register</a>
         </li>
-        <br>
         <li>
           <a href={~p"/sessions/new"} class="hover:text-zinc-700">Log in</a>
         </li>
-        <br>
       <% end %>
     </ul>
   </nav>

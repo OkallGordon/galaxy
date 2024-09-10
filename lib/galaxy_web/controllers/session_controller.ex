@@ -13,7 +13,7 @@ defmodule GalaxyWeb.SessionController do
         greeting = get_greeting()  # Call the function to get the greeting
         conn
         |> put_session(:user_id, user.id)
-        |> put_flash(:info, "#{greeting},  #{user.name},  welcome back!")  # Use the greeting in the flash message
+        |> put_flash(:info, "#{greeting},  #{user.name},  Welcome Back!")  # Use the greeting in the flash message
         |> redirect(to: ~p"/")
 
       {:error, _reason} ->
@@ -36,7 +36,7 @@ defmodule GalaxyWeb.SessionController do
   def delete(conn, _params) do
     conn
     |> configure_session(drop: true)
-    |> put_flash(:info, "You are logged out successfully")
+    |> put_flash(:info, "It's sad to see you leave. Welcome Back next time!")
     |> redirect(to: ~p"/")
   end
 end
