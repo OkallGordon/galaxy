@@ -24,6 +24,7 @@ defmodule Galaxy.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import Galaxy.DataCase
+      import Galaxy.TestHelpers
     end
   end
 
