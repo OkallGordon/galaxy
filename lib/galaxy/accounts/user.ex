@@ -9,6 +9,7 @@ defmodule Galaxy.Accounts.User do
     field :email, :string
     field :password, :string, virtual: true
     field :password_hash, :string
+    field :version, :integer, default: 1
 
     timestamps(type: :utc_datetime)
   end
@@ -16,12 +17,12 @@ defmodule Galaxy.Accounts.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :email])
+    |> cast(attrs, [:name, :email, :version])
     |> validate_required([:email, :name])
     |> validate_length(:name, min: 4, max: 10)
-    |> validate_length(:email, min: 5, max: 20)
-    |> validate_format(:email, ~r/@/)
-    |> unique_constraint(:email, message: "This email has been taken")
+    |> validate_length(:email, max: 20)
+    |> validate_format(:email, ~r/@/, message: "Email must contain @")
+    |> unique_constraint(:email)
 
   end
 
@@ -34,7 +35,7 @@ defmodule Galaxy.Accounts.User do
     |> changeset(attrs)
     |> cast(attrs, [:password])
     |> validate_required([:password])
-    |> validate_length(:password, min: 1, max: 20)
+    |> validate_length(:password, min: 6,  max: 20)
     |> put_password_hash()
   end
 
