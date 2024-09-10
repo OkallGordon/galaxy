@@ -42,7 +42,7 @@ defmodule Galaxy.Accounts do
       ** (Ecto.NoResultsError)
 
   """
-  def get_user!(id), do: Repo.get!(User, id)
+  def get_user(id), do: Repo.get(User, id)
 
 
   @doc """
@@ -127,6 +127,7 @@ defmodule Galaxy.Accounts do
     |> put_password_hash()
     |> Repo.insert()
   end
+
 
   def authenticate_by_email_and_pass(email, given_password) do
     user = Repo.get_by(User, email: email)
