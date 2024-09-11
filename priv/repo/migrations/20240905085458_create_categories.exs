@@ -10,4 +10,9 @@ defmodule Galaxy.Repo.Migrations.CreateCategories do
 
     create unique_index(:categories, [:name])
   end
+
+  def down do
+    execute "DROP INDEX IF EXISTS  categories_name_index"
+    drop table(:categories)
+  end
 end

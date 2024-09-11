@@ -4,6 +4,7 @@ defmodule Galaxy.AccountsTest do
   alias Galaxy.Accounts
   alias Galaxy.Accounts.User
 
+
   describe "register_user/1" do
     @valid_attrs %{
       name: "User",
@@ -24,12 +25,12 @@ defmodule Galaxy.AccountsTest do
      assert Accounts.list_users() == []
    end
 
-   test "enforces unique email" do
+   test "enforces unique emails" do
     assert {:ok, %User{id: id}} = Accounts.register_user(@valid_attrs)
     assert {:error, changeset} = Accounts.register_user(@valid_attrs)
 
-    assert %{email: ["has been taken"]} =
-            errors_on(changeset)
+    assert %{email: ["has already been taken"]} = errors_on(changeset)
+
     assert [%User{id: ^id}] = Accounts.list_users()
    end
 
