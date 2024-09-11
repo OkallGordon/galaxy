@@ -53,4 +53,28 @@ defmodule Galaxy.AccountsTest do
       assert Accounts.list_users() == []
     end
   end
+  describe "authenticate_by_email_and_pass/2" do
+    @pass "123456"
+
+    setup do
+      {:ok, user: user_fixture(password: @pass)}
+    end
+
+    test "returns user with correct password", %{user: user} do
+      assert {:ok, auth_user} =
+        Accounts.authenticate_by_email_and_pass(user.email, @pass)
+
+      assert auth_user.id == user.id
+    end
+
+    test "returns unauthorized error with invalid password", %{user: user} do
+      assert {:error, :unauthorized} =
+        Accounts.authenticate_by_email_and_pass(user.email, "badpass")
+    end
+
+    test "returns not found error with no matching user for email" do
+      assert {:error, :not_found} =
+        Accounts.authenticate_by_email_and_pass("unknownuser@example.com", @pass)
+    end
+  end
 end
