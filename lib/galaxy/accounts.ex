@@ -81,18 +81,18 @@ defmodule Galaxy.Accounts do
   @doc """
   Authenticates a user by email and password.
   """
-  def authenticate_by_email_and_pass(email, given_password) do
-    user = Repo.get_by(User, email: email)
+ def authenticate_by_email_and_pass(email, given_password) do
+  user = Repo.get_by(User, email: email)
 
-    case user do
-      nil -> {:error, "Invalid email or password"}
-      %User{password_hash: nil} -> {:error, "Invalid email or password"}
-      %User{password_hash: password_hash} ->
-        if Pbkdf2.verify_pass(given_password, password_hash) do
-          {:ok, user}
-        else
-          {:error, "Invalid email or password"}
-        end
-    end
+  case user do
+    nil -> {:error, :not_found}
+    %User{password_hash: nil} -> {:error, :unauthorized}
+    %User{password_hash: password_hash} ->
+      if Pbkdf2.verify_pass(given_password, password_hash) do
+        {:ok, user}
+      else
+        {:error, :unauthorized}
+      end
   end
+end
 end
