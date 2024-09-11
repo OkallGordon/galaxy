@@ -5,18 +5,21 @@ defmodule Galaxy.TestHelpers do
   }
 
   def user_fixture(attrs \\ %{}) do
-    {:ok, user} =
-      attrs
-      |> Enum.into(%{
-        name: "Some User",
-        email: "user#{System.unique_integer([:positive])}",
-        password: attrs[:password] || "supersecret"
-      })
-      |> Accounts.register_user()
+    # Ensure a valid email format by adding an "@" character
+    email = "user#{System.unique_integer([:positive])}@example.com"
 
-      user
+    attrs
+    |> Enum.into(%{
+      name: "Some User",
+      email: email,  # Use a valid email format
+      password: attrs[:password] || "supersecret"
+    })
+    |> Accounts.register_user()
+    |> case do
+      {:ok, user} -> user
+      {:error, changeset} -> raise "Failed to create user: #{inspect(changeset)}"
+    end
   end
-
   def video_fixture(%Accounts.User{} = user, attrs \\ %{}) do
     attrs =
       Enum.into(attrs, %{
