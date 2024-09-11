@@ -12,6 +12,18 @@
 
 alias Galaxy.Multimedia
 
-for category <- ~w(Action Drama Romance Comedy Sci-fi Horror hello Test) do
-  Multimedia.create_category!(category)
+categories = [
+  "Action",
+  "Drama",
+  "Romance",
+  "Comedy",
+  "Sci-fi",
+  "Horror",
+  "History",
+  "Reality",
+  "News"
+]
+
+for category_name <- categories do
+  Multimedia.create_category!(category_name)
 end
