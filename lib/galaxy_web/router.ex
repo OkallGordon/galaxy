@@ -26,7 +26,7 @@ defmodule GalaxyWeb.Router do
     post "/users", UserController, :create
     get "/users/:id/edit", UserController, :edit
     put "/users/:id", UserController, :update
-    get "/users/:id", UserController, :show
+    get "/users/:id/", UserController, :show
     delete "/users/:id", UserController, :delete
     resources "/sessions", SessionController, only: [:new, :create, :delete]
   end

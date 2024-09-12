@@ -1,5 +1,5 @@
 <.header>
-  Listing Users
+  List of Users
   <:actions>
     <.link href={~p"/users/new"}>
       <.button>New User</.button>
@@ -10,7 +10,7 @@
   <:col :let={user} label="Name"><%= user.name %></:col>
   <:action :let={user}>
     <div class="sr-only">
-      <.link navigate={~p"/users/#{user}"}>Show</.link>
+      <.link navigate={~p"/users/#{user}/"}>Show</.link>
     </div>
     <.link navigate={~p"/users/#{user}/edit"}>Edit</.link>
   </:action>

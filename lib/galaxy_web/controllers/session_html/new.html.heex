@@ -1,18 +1,18 @@
 <.header>
   Login
-  <:subtitle>Use this form to log in to your account.</:subtitle>
+  <:subtitle><em>Dear User, kindly use your login details here to access your account.</em></:subtitle>
 </.header>
 <br>
 <form phx-submit="create" action={~p"/sessions"} method="post">
 <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
 
   <div>
-    <label for="email"><strong>Email:</strong></label>
+    <label for="email"><strong>Email:</strong></label><br>
     <input type="text" name="user[email]" id="email" placeholder="Email" required />
   </div>
   <br>
   <div>
-    <label for="password"><strong>Password: </strong></label>
+    <label for="password"><strong>Password: </strong></label><br>
     <input type="password" name="user[password]" id="password" placeholder="Password" required />
   </div>
    <br>
