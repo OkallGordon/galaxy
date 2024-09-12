@@ -28,7 +28,7 @@ defmodule GalaxyWeb.Auth do
    else
     conn
     |> put_flash(:error, "Sorry you must be logged in to access this page")
-    |> redirect(to: "/")
+    |> redirect(to: "/sessions/new")
     |> halt()
    end
   end
