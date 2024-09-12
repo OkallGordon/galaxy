@@ -28,11 +28,14 @@ defmodule GalaxyWeb.ConnCase do
       import Plug.Conn
       import Phoenix.ConnTest
       import GalaxyWeb.ConnCase
+
     end
   end
 
   setup tags do
     Galaxy.DataCase.setup_sandbox(tags)
-    {:ok, conn: Phoenix.ConnTest.build_conn()}
+    conn = Phoenix.ConnTest.build_conn()
+    conn = Plug.Test.init_test_session(conn, %{}) # Initialize an empty session
+    {:ok, conn: conn}
   end
 end
