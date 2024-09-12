@@ -29,6 +29,11 @@ defmodule GalaxyWeb.Router do
     get "/users/:id", UserController, :show
     delete "/users/:id", UserController, :delete
     resources "/sessions", SessionController, only: [:new, :create, :delete]
+  end
+
+  scope "/", GalaxyWeb do
+    pipe_through [:browser, :authenticate_user]
+
     resources "/videos", VideoController
   end
 
