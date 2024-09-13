@@ -4,6 +4,7 @@ defmodule GalaxyWeb.AuthTest do
 
   import Galaxy.TestHelpers
 
+
   setup %{conn: conn} do
     user = user_fixture()  # Create a user dynamically with a fixture or factory
 
