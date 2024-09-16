@@ -22,6 +22,19 @@ import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 
+import Player from "./player";
+
+const video = document.getElementById("video");
+
+if (video) {
+  const playerId = video.getAttribute("data-player-id");
+
+  Player.init(video.id, playerId, () => {
+    console.log("Player ready!");
+  });
+}
+
+
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
