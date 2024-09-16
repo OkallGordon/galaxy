@@ -13,13 +13,23 @@
   <:col :let={video} label="Description"><%= video.description %></:col>
   <:action :let={video}>
     <div class="sr-only">
-      <.link navigate={~p"/videos/#{video}"}>Show</.link>
+      <.link navigate={~p"/videos/#{video.id}"}>Show</.link>
     </div>
-    <.link navigate={~p"/videos/#{video}/edit"}>Edit</.link>
+    <.link navigate={~p"/videos/#{video.id}/edit"}>Edit</.link>
   </:action>
   <:action :let={video}>
-    <.link href={~p"/videos/#{video}"} method="delete" data-confirm="Are you sure?">
-      Delete
-    </.link>
+    <.form
+      action={~p"/videos/#{video.id}"}
+      method="post"
+      data-confirm="Are you sure?"
+      class="inline"
+    >
+      <input type="hidden" name="_method" value="delete" />
+      <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+      <.button type="submit" class="button">Delete</.button>
+    </.form>
+  </:action>
+  <:action :let={video}>
+    <.link href={~p"/watch/#{video.id}"} class="button">Watch</.link>
   </:action>
 </.table>
