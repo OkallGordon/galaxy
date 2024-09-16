@@ -26,7 +26,10 @@
   <nav role="navigation">
     <ul class="flex items-center gap-4 font-semibold leading-6 text-zinc-900">
       <%= if @current_user do %>
-        <li><%= @current_user.name %></li>
+        <li><em><%= @current_user.name %></em></li><br><br>
+        <li>
+        <a href={~p"/videos"} class="hover:text-zinc-700">My Videos </a>
+        </li>
         <li>
           <form action={~p"/sessions/#{@current_user.id}"} method="post" class="inline">
             <input type="hidden" name="_method" value="delete">
