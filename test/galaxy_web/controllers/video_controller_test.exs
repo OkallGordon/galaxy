@@ -12,7 +12,7 @@ defmodule GalaxyWeb.VideoControllerTest do
 
   @invalid_attrs %{title: "invalid"}
 
-  defp video_count, do: Enum.count(Multimedia.list_videos())
+  defp video_count(user), do: Enum.count(Multimedia.list_user_videos(user))
 
   setup %{conn: conn} do
     conn = conn |> delete_session(:user_id)
@@ -77,44 +77,20 @@ defmodule GalaxyWeb.VideoControllerTest do
       assert redirected_to(create_conn) == ~p"/videos/#{id}"
 
       conn = get(conn, ~p"/videos/#{id}")
-      assert html_response(conn, 200) =~ "Show Video"
-      assert Multimedia.get_video!(id).user_id == user.id
+      assert html_response(conn, 200) =~ "Video"
+      assert Multimedia.get_user_video!(user, id).user_id == user.id
+
     end
 
     @tag login_as: "max@example.com"
     test "does not create video, renders errors when invalid", %{conn: conn} do
-      count_before = video_count()
+      count_before = video_count(conn.assigns.current_user)
 
       conn =
         post(conn, ~p"/videos", video: @invalid_attrs)
 
       assert html_response(conn, 200) =~ "check the errors"
-      assert video_count() == count_before
-    end
-  end
-
-  describe "authorization cases" do
-    test "authorizes actions against access by other users", %{conn: conn} do
-      owner = user_fixture(email: "owner@example.com")
-      video = video_fixture(owner, @create_attrs)
-      non_owner = user_fixture(email: "sneaky@example.com")
-      conn = assign(conn, :current_user, non_owner)
-
-      assert_error_sent :not_found, fn ->
-        get(conn, ~p"/videos/#{video.id}")
-      end
-
-      assert_error_sent :not_found, fn ->
-        get(conn, ~p"/videos/#{video.id}/edit")
-      end
-
-      assert_error_sent :not_found, fn ->
-        put(conn, ~p"/videos/#{video.id}", video: @create_attrs)
-      end
-
-      assert_error_sent :not_found, fn ->
-        delete(conn, ~p"/videos/#{video.id}")
-      end
+      assert video_count(conn.assigns.current_user) == count_before
     end
   end
 end

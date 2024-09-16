@@ -12,7 +12,7 @@ defmodule GalaxyWeb.VideoController do
 
   def index(conn, _params, current_user) do
     videos = Multimedia.list_user_videos(current_user)
-    render(conn, :index, videos: videos)
+    render(conn, "index.html", videos: videos)
   end
 
   def action(conn, _) do
