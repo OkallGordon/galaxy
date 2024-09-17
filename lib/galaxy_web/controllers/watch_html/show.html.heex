@@ -1,12 +1,24 @@
 <div class="row">
   <div class="column column-60">
-    <h1><%= @video.title %></h1>
+    <h1><strong><%= @video.title %></strong></h1><br>
     <div id="video" data-id={@video.id} data-player-id={player_id(@video)}>
+      <!-- Embed the video player here if needed -->
+      <iframe 
+  width="560" 
+  height="315" 
+  src="https://www.youtube.com/embed/{@video.id}" 
+  frameborder="0" 
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+  allowfullscreen>
+</iframe>
+
     </div>
   </div>
-  <div class="column annotations">
-    <h3>Annotations</h3>
+
+  <div class="column annotations"><br>
+    <h3><strong>Annotations</strong></h3>
     <div id="msg-container">
+      <!-- Annotation messages will appear here -->
     </div>
     <div>
       <textarea id="msg-input" rows="3" placeholder="Comment..."></textarea>
