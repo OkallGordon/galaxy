@@ -1,0 +1,15 @@
+.annotations {
+    border-left: 1px solid #eaeaea;
+  }
+  
+  #msg-container {
+    height: auto;
+    min-height: 400px;
+  }
+  
+  video {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
