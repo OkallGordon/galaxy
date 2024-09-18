@@ -1,13 +1,19 @@
 .annotations {
-    border-left: 1px solid #eaeaea;
+  width: 30%; /* Adjust based on how much space you want annotations to take */
+  margin-right: 20px; /* Adds some spacing between annotations and the video */
+  border-radius: 1px;
+  padding: 10px; /* Optional: Adds padding inside the annotation box */
+  box-sizing: border-box;
+  border-left: 1px solid #8ed7e4;
   }
   
   #msg-container {
     height: auto;
-    min-height: 400px;
+    min-height: 20px;
   }
   
   video {
+    border-right: #8ed7e4;
     width: 100%;
     height: auto;
     display: block;

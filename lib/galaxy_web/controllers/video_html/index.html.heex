@@ -18,7 +18,7 @@
     <.link navigate={~p"/videos/#{video.id}/edit"}>Edit</.link>
   </:action>
   <:action :let={video}>
-    <.form
+    <form
       action={~p"/videos/#{video.id}"}
       method="post"
       data-confirm="Are you sure?"
@@ -26,8 +26,8 @@
     >
       <input type="hidden" name="_method" value="delete" />
       <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
-      <.button type="submit" class="button">Delete</.button>
-    </.form>
+      <button type="submit" class="button">Delete</button>
+    </form>
   </:action>
   <:action :let={video}>
     <.link href={~p"/watch/#{video.id}"} class="button">Watch</.link>
