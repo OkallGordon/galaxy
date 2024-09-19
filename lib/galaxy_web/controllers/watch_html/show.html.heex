@@ -4,14 +4,13 @@
     <div id="video" data-id={@video.id} data-player-id={player_id(@video)}>
       <!-- Embed the video player here if needed -->
       <iframe 
-  width="560" 
-  height="315" 
-  src="https://www.youtube.com/embed/{@video.id}autoplay=1&mute=1"
-  frameborder="0" 
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-  allowfullscreen>
-</iframe>
-
+        width="560" 
+        height="315" 
+        src="https://www.youtube.com/embed/{@video.id}autoplay=1&mute=1"
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen>
+      </iframe>
     </div>
   </div>
 
@@ -22,8 +21,10 @@
     </div>
     <div>
       <textarea id="msg-input" rows="4" placeholder="Comment..."></textarea>
+      <br>
       <button id="msg-submit" class="button column" type="submit">
-        Post
+      <strong>Post</strong><br>
+
       </button>
     </div>
   </div>
