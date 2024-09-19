@@ -1,21 +1,38 @@
+/* Container to hold video and annotation side by side */
+#watch-container {
+  display: flex;  /* Enables flexbox layout */
+  justify-content: space-between; /* Distributes space between child elements */
+  align-items: center; /* Aligns child elements vertically in the center */
+}
+
+/* Annotations Section */
 .annotations {
-  width: 30%; /* Adjust based on how much space you want annotations to take */
-  margin-right: 20px; /* Adds some spacing between annotations and the video */
-  border-radius: 1px;
-  padding: 10px; /* Optional: Adds padding inside the annotation box */
-  box-sizing: border-box;
-  border-left: 1px solid #8ed7e4;
-  }
-  
-  #msg-container {
-    height: auto;
-    min-height: 20px;
-  }
-  
-  video {
-    border-right: #8ed7e4;
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-  
+  color:rgb(0, 0, 0);
+  width: 75%; /* Adjust width as per your design */
+  margin-top: 20px;
+  shape-margin: 50%;
+  margin-left: 2px;
+   /* Adds space between the annotation and the video */
+  border: 1px solid #000000; /* Correct border style */
+  border-radius: 1px; /* Adjusts the border-radius */
+}
+
+/* Message container inside annotations */
+#msg-container {
+  height: auto;
+  min-height: 100px;
+}
+
+/* Video Section */
+.video {
+  width: 30%; /* Makes the video take up the rest of the space */
+  height: auto;
+  margin-left: 100px;
+}
+
+/* Video element */
+video {
+  width: 30%; /* Ensures the video scales to the width of its container */
+  height: auto;
+  display: block;
+}
