@@ -16,50 +16,51 @@ class Video {
     socket.connect();
 
     // Create an instance of Player and initialize it
-    const player = new Player(); // Instantiate Player
-    player.init(element.id, playerId, () => this.onReady(videoId, socket, player)); // Pass the player instance
+    const player = new Player();
+    player.init(element.id, playerId, () => this.onReady(videoId, socket, player));
   }
 
   static onReady(videoId, socket, player) {
-    // Check and get DOM elements
     const msgContainer = document.getElementById("msg-container");
     const msgInput = document.getElementById("msg-input");
+    const commentInput = document.getElementById("comment-input");
     const postButton = document.getElementById("msg-submit");
-     // New comment input field
 
-    if (!msgContainer) {
-      console.error("msg-container element not found");
+    if (!msgContainer || !msgInput || !commentInput || !postButton) {
+      console.error("One or more required elements not found");
       return;
     }
-    if (!msgInput) {
-      console.error("msg-input element not found");
-      return;
-    }
-    if (!postButton) {
-      console.error("msg-submit element not found");
-      return;
-    }
-    
 
     const vidChannel = socket.channel(`videos:${videoId}`);
 
     console.log("Joining video channel:", vidChannel);
 
     postButton.addEventListener("click", () => {
+      const message = msgInput.value.trim(); // Get trimmed value
+      const comment = commentInput.value.trim(); // Get trimmed value
+
+      // Validation check
+      if (message === "" && comment === "") {
+        alert("Please enter a message or comment before posting.");
+        return; // Exit the function if both are empty
+      }
+
       const payload = {
-        body: msgInput.value,
-        comment: commentInput.value, // Include comment in the payload
-        at: player.getCurrentTime() // Use the instance of Player
+        body: message,
+        comment: comment,
+        at: player.getCurrentTime()
       };
-      
+
       console.log("Posting annotation:", payload);
       
       vidChannel.push("new_annotation", payload)
-        .receive("ok", resp => console.log("Annotation sent successfully", resp))
+        .receive("ok", resp => {
+          console.log("Annotation sent successfully", resp);
+          msgInput.value = ""; // Clear the input fields
+          commentInput.value = ""; // Clear the input fields
+          alert("Annotation posted!");
+        })
         .receive("error", e => console.log("Error sending annotation", e));
-      
-      msgInput.value = ""; // Clear the input field
-      commentInput.value = ""; // Clear the comment input field
     });
 
     vidChannel.on("new_annotation", (resp) => {
@@ -72,26 +73,24 @@ class Video {
       .receive("error", reason => console.log("Join failed", reason));
   }
 
-  // Function to escape user input to prevent XSS attacks
   static esc(str) {
     const div = document.createElement("div");
     div.appendChild(document.createTextNode(str));
     return div.innerHTML;
   }
 
-  // Function to render an annotation
   static renderAnnotation(msgContainer, { user, body, comment, at }) {
     const template = document.createElement("div");
     
     template.innerHTML = `
       <a href="#" data-seek="${this.esc(at)}">
         <b>${this.esc(user.email)}</b>: ${this.esc(body)}
-        <p>${this.esc(comment)}</p> <!-- Display comment -->
+        <p>${this.esc(comment)}</p>
       </a>
     `;
     
     msgContainer.appendChild(template);
-    msgContainer.scrollTop = msgContainer.scrollHeight; // Scroll to the bottom
+    msgContainer.scrollTop = msgContainer.scrollHeight;
   }
 }
 
