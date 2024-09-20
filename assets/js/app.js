@@ -10,7 +10,7 @@ import { LiveSocket } from "phoenix_live_view";
 import topbar from "../vendor/topbar";
 import Player from "./player";
 import Video from "./video";
-import socket from "./socket"; // Import the socket instance
+import socket from "./user_socket"; // Import the socket instance
 
 // Initialize the video player if the video element is present
 const video = document.getElementById("video");
