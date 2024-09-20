@@ -8,6 +8,8 @@ defmodule Galaxy.Accounts do
   alias Galaxy.Accounts.User
   alias Pbkdf2
 
+  @token_salt "user socket salt"  # Define your token salt here
+
   @doc """
   Returns the list of users.
 
@@ -15,7 +17,6 @@ defmodule Galaxy.Accounts do
 
       iex> list_users()
       [%User{}, ...]
-
   """
   def list_users do
     Repo.all(User)
@@ -81,18 +82,31 @@ defmodule Galaxy.Accounts do
   @doc """
   Authenticates a user by email and password.
   """
- def authenticate_by_email_and_pass(email, given_password) do
-  user = Repo.get_by(User, email: email)
+  def authenticate_by_email_and_pass(email, given_password) do
+    user = Repo.get_by(User, email: email)
 
-  case user do
-    nil -> {:error, :not_found}
-    %User{password_hash: nil} -> {:error, :unauthorized}
-    %User{password_hash: password_hash} ->
-      if Pbkdf2.verify_pass(given_password, password_hash) do
-        {:ok, user}
-      else
-        {:error, :unauthorized}
-      end
+    case user do
+      nil -> {:error, :not_found}
+      %User{password_hash: nil} -> {:error, :unauthorized}
+      %User{password_hash: password_hash} ->
+        if Pbkdf2.verify_pass(given_password, password_hash) do
+          {:ok, user}
+        else
+          {:error, :unauthorized}
+        end
+    end
   end
-end
+
+  @doc """
+  Verifies a user token and returns the user if valid.
+  """
+  def verify_user_token(token) do
+    case Phoenix.Token.verify(GalaxyWeb.Endpoint, @token_salt, token) do
+      {:ok, user_id} ->
+        Repo.get(User, user_id)
+
+      {:error, _reason} ->
+        nil  # Token is invalid
+    end
+  end
 end

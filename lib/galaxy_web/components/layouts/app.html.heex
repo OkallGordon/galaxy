@@ -26,9 +26,9 @@
   <nav role="navigation">
     <ul class="flex items-center gap-4 font-semibold leading-6 text-zinc-900">
       <%= if @current_user do %>
-        <li><em><%= @current_user.name %></em></li><br><br>
+        <li><em><%= @current_user.name %></em></li>
         <li>
-        <a href={~p"/videos"} class="hover:text-zinc-700">My Videos </a>
+          <a href={~p"/videos"} class="hover:text-zinc-700">My Videos</a>
         </li>
         <li>
           <form action={~p"/sessions/#{@current_user.id}"} method="post" class="inline">
@@ -52,6 +52,17 @@
 <main class="px-4 py-20 sm:px-6 lg:px-8">
   <div class="mx-auto max-w-2xl">
     <.flash_group flash={@flash} />
+    
+    <!-- Include user_token here -->
+    <%= if @user_token do %>
+      <input type="hidden" name="user_token" value={@user_token} />
+    <% end %>
+    
     <%= @inner_content %>
   </div>
 </main>
+
+<script>
+  // Set the user token for socket connection
+  window.token = "<%= @user_token || "" %>"; // Ensure this value is correctly assigned
+</script>

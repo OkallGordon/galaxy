@@ -1,6 +1,7 @@
 defmodule Galaxy.Multimedia.Video do
   use Ecto.Schema
   import Ecto.Changeset
+  import Ecto.Query, only: [from: 2]
 
   @primary_key {:id, Galaxy.Multimedia.Permalink, autogenerate: true}
 
@@ -10,9 +11,9 @@ defmodule Galaxy.Multimedia.Video do
     field :url, :string
     field :slug, :string
 
-
     belongs_to :user, Galaxy.Accounts.User
     belongs_to :category, Galaxy.Multimedia.Category
+    has_many :annotations, Galaxy.Multimedia.Annotation  # Add this line
 
     timestamps(type: :utc_datetime)
   end
@@ -37,5 +38,11 @@ defmodule Galaxy.Multimedia.Video do
     str
     |> String.downcase()
     |> String.replace(~r/[^\w-]+/u, "-")
+  end
+
+  # Fetch annotations for a given video ID
+  def get_annotations(video_id) do
+    from(a in Galaxy.Multimedia.Annotation, where: a.video_id == ^video_id)
+    |> Galaxy.Repo.all()
   end
 end

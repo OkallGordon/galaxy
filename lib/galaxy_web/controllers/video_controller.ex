@@ -5,10 +5,7 @@ defmodule GalaxyWeb.VideoController do
   alias Galaxy.Multimedia.Video
 
   plug GalaxyWeb.Auth, :authenticate_user when action in [:index, :show, :new, :create, :edit, :update, :delete]
-
   plug :load_categories when action in [:new, :create, :edit, :update]
-
-
 
   def index(conn, _params, current_user) do
     videos = Multimedia.list_user_videos(current_user)
@@ -19,7 +16,6 @@ defmodule GalaxyWeb.VideoController do
     args = [conn, conn.params, conn.assigns.current_user]
     apply(__MODULE__, action_name(conn), args)
   end
-
 
   def new(conn, _params, _current_user) do
     categories = Multimedia.list_alphabetical_categories()
@@ -42,7 +38,8 @@ defmodule GalaxyWeb.VideoController do
 
   def show(conn, %{"id" => id}, current_user) do
     video = Multimedia.get_user_video!(current_user, id)
-    render(conn, :show, video: video)
+    annotations = Multimedia.get_annotations(video.id)  # Fetch annotations for the video
+    render(conn, :show, video: video, annotations: annotations)  # Pass annotations to the view
   end
 
   def edit(conn, %{"id" => id}, current_user) do
@@ -73,7 +70,6 @@ defmodule GalaxyWeb.VideoController do
     |> put_flash(:info, "Video deleted successfully.")
     |> redirect(to: ~p"/videos")
   end
-
 
   defp load_categories(conn, _) do
     assign(conn, :categories, Multimedia.list_alphabetical_categories())

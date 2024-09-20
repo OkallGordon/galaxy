@@ -6,13 +6,23 @@ defmodule GalaxyWeb.VideoChannel do
   end
 
   def handle_in("new_annotation", %{"body" => body, "comment" => comment, "at" => at}, socket) do
-    # Process and store the annotation and comment
-    broadcast(socket, "new_annotation", %{
-      body: body,
-      comment: comment,
-      at: at,
-      user: socket.assigns.current_user
-    })
-    {:noreply, socket}
+    current_user = socket.assigns[:current_user]
+
+    if current_user do
+      # Proceed with creating the annotation
+      # Example: Multimedia.create_annotation(%{body: body, comment: comment, at: at, user_id: current_user.id})
+
+      # Broadcast the new annotation to the channel
+      broadcast(socket, "new_annotation", %{
+        body: body,
+        comment: comment,
+        at: at,
+        user: %{email: current_user.email}  # Adjust this if you want more user details
+      })
+
+      {:noreply, socket}
+    else
+      {:reply, {:error, "User not authenticated"}, socket}
+    end
   end
 end
