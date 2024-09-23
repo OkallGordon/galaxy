@@ -4,7 +4,7 @@
 window.userToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
 
 console.log("User Token set in app.js:", window.userToken); // Debugging line
-
+import {Presence} from "phoenix";
 import { Socket } from "phoenix";
 import { LiveSocket } from "phoenix_live_view";
 import topbar from "../vendor/topbar";

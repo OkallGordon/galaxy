@@ -30,6 +30,7 @@ defmodule GalaxyWeb.Router do
     delete "/users/:id", UserController, :delete
     resources "/sessions", SessionController, only: [:new, :create, :delete]
     get "/watch/:id", WatchController, :show
+    resources "/annotations", AnnotationController, only: [:create]
   end
 
   scope "/", GalaxyWeb do

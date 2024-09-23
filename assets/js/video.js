@@ -1,4 +1,5 @@
 import Player from "./player";
+import { Presence } from "phoenix"; // Ensure you import Presence
 
 class Video {
   static init(socket, element) {
@@ -25,13 +26,25 @@ class Video {
     const msgInput = document.getElementById("msg-input");
     const commentInput = document.getElementById("comment-input");
     const postButton = document.getElementById("msg-submit");
+    const userList = document.getElementById("user-list"); // Add a user list element
 
-    if (!msgContainer || !msgInput || !commentInput || !postButton) {
+    if (!msgContainer || !msgInput || !commentInput || !postButton || !userList) {
       console.error("One or more required elements not found");
       return;
     }
 
     const vidChannel = socket.channel(`videos:${videoId}`);
+
+    // Create a presence instance
+    const presence = new Presence(vidChannel);
+
+    // Listen for presence state updates
+    presence.onSync(() => {
+      userList.innerHTML = presence.list((id, { metas: [first, ...rest] }) => {
+        const count = rest.length + 1; // Count includes the first user
+        return `<li>${this.esc(id)}: (${count})</li>`;
+      }).join("");
+    });
 
     console.log("Joining video channel:", vidChannel);
 
@@ -69,8 +82,20 @@ class Video {
     });
 
     vidChannel.join()
-      .receive("ok", resp => console.log("Joined the video channel", resp))
+      .receive("ok", resp => {
+        console.log("Joined the video channel", resp);
+        // Optionally track presence after joining
+      })
       .receive("error", reason => console.log("Join failed", reason));
+    
+    // Track presence for the current user
+    vidChannel.on("presence_state", (state) => {
+      presence.syncState(state);
+    });
+    
+    vidChannel.on("presence_diff", (diff) => {
+      presence.syncDiff(diff);
+    });
   }
 
   static esc(str) {
