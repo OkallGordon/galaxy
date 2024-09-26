@@ -8,6 +8,7 @@ defmodule GalaxyWeb.VideoHTML do
   """
   attr :changeset, Ecto.Changeset, required: true
   attr :action, :string, required: true
+  attr :categories, :list, required: true
 
   def video_form(assigns)
 

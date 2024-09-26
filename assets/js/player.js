@@ -12,8 +12,8 @@ class Player {
   onIframeReady = (domId, playerId, onReady) => {
     console.log('YouTube Player is being initialized...');  // Add log
     this.player = new YT.Player(domId, {
-      height: "300",
-      width: "500",
+      height: "315",
+      width: "560",
       videoId: playerId,
       events: {
         "onReady": event => {
