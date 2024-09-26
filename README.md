@@ -40,7 +40,7 @@ Welcome to **Galaxy Web App**, a cutting-edge modular application developed with
 - **Phoenix Framework:** A web development framework for Elixir that provides high productivity and performance, enabling real-time features via channels.
 - **Ecto:** A database wrapper and query generator for Elixir, used for database interactions.
 - **PostgreSQL:** An open-source relational database management system that serves as the backend for storing video and user data.
-- **JavaScript / Phoenix LiveView:** Used for creating dynamic and interactive user interfaces without requiring complex front-end frameworks.
+- **JavaScript:** Used for creating dynamic and interactive user interfaces without requiring complex front-end frameworks.
 
 ## Getting Started
 
