@@ -31,6 +31,7 @@ defmodule GalaxyWeb.Router do
     resources "/sessions", SessionController, only: [:new, :create, :delete]
     get "/watch/:id", WatchController, :show
     resources "/annotations", AnnotationController, only: [:create]
+    resources "/comments", CommentController
   end
 
   scope "/", GalaxyWeb do
