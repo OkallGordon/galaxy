@@ -30,6 +30,9 @@
         <li>
           <a href={~p"/videos"} class="hover:text-zinc-700">My Videos</a>
         </li>
+        <li> 
+           <a href={~p"/comments"} class="hover:text-zinc-700"> User's Comment</a>
+           </li>
         <li>
           <form action={~p"/sessions/#{@current_user.id}"} method="post" class="inline">
             <input type="hidden" name="_method" value="delete">
@@ -59,6 +62,8 @@
     <% end %>
     
     <%= @inner_content %>
+
+    <!-- Render the comments section -->
   </div>
 </main> <!-- Correct path to video.css -->
 
