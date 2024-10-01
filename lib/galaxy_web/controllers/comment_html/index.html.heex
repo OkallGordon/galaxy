@@ -1,0 +1,31 @@
+<.header>
+  Listing Comments
+  <:actions>
+    <.link href={~p"/comments/new"}>
+      <.button>New Comment</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table id="comment" rows={@comments} row_click={&JS.navigate(~p"/comments/#{&1}")}>
+  <:col :let={comment} label="Topic"><%= comment.topic %></:col>
+  <:col :let={comment} label="Comment"><%= comment.comment %></:col>
+  <:action :let={comment}>
+    <div class="sr-only">
+      <.link navigate={~p"/comments/#{comment.id}"}>Show</.link>
+    </div>
+    <.link navigate={~p"/comments/#{comment.id}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={comment}>
+    <form
+      action={~p"/comments/#{comment.id}"}
+      method="post"
+      data-confirm="Are you sure?"
+      class="inline"
+    >
+      <input type="hidden" name="_method" value="delete" />
+      <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+      <button type="submit" class="button">Delete</button>
+    </form>
+  </:action>
+</.table>
