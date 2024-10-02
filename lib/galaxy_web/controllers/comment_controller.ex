@@ -3,11 +3,18 @@ defmodule GalaxyWeb.CommentController do
 
   alias Galaxy.Comments
   alias Galaxy.Comments.Comment
+  alias Galaxy.Repo  # Ensure you have this alias
+  alias Galaxy.Topics.Topic
+  alias Galaxy.GeminiClient
+  import Ecto.Query  # Import the Ecto Query module for using the `from` function
 
   def index(conn, _params) do
     current_user = get_current_user(conn)
     comments = Comments.list_user_comments(current_user)
-    render(conn, "index.html", comments: comments)
+
+    #Fetch the user's name
+    user_name = current_user.name
+    render(conn, "index.html", comments: comments, user_name: user_name)
   end
 
   defp get_current_user(conn) do
@@ -20,24 +27,46 @@ defmodule GalaxyWeb.CommentController do
     render(conn, "new.html", changeset: changeset, users: users)
   end
 
+    def show(conn, %{"id" => id}) do
+    current_user = get_current_user(conn)
+    comment = Comments.get_user_comment!(current_user, id)
+    render(conn, "show.html", comment: comment)
+  end
+
   def create(conn, %{"comment" => comment_params}) do
     current_user = get_current_user(conn)
+
     case Comments.create_user_comment(current_user, comment_params) do
       {:ok, comment} ->
-        conn
-        |> put_flash(:info, "Your comment has been created successfully.")
-        |> redirect(to: ~p"/comments/#{comment.id}")
+        # Fetch all comments related to the same topic
+        topic_comments = Repo.all(from c in Comment, where: c.topic_id == ^comment_params["topic_id"])
+
+        # Extract the comment texts for summarization
+        comment_texts = Enum.map(topic_comments, & &1.comment)
+
+        # Send the comments to Gemini AI for summarization
+        case GeminiClient.summarize_comments(comment_texts) do
+          {:ok, summary} ->
+            # Save the summary in the topic record
+            topic = Repo.get!(Topic, comment_params["topic_id"])
+            Repo.update!(Topic.changeset(topic, %{summary: summary}))
+
+            # Redirect with a success message
+            conn
+            |> put_flash(:info, "Your comment has been created and the summary is updated.")
+            |> redirect(to: ~p"/comments/#{comment.id}")
+
+          {:error, reason} ->
+            # Handle errors from the Gemini AI service
+            conn
+            |> put_flash(:error, "Failed to summarize comments: #{reason}")
+            |> redirect(to: ~p"/comments/#{comment.id}")
+        end
 
       {:error, %Ecto.Changeset{} = changeset} ->
         users = Galaxy.Accounts.list_users()
         render(conn, "new.html", changeset: changeset, users: users)
     end
-  end
-
-  def show(conn, %{"id" => id}) do
-    current_user = get_current_user(conn)
-    comment = Comments.get_user_comment!(current_user, id)
-    render(conn, "show.html", comment: comment)
   end
 
   def edit(conn, %{"id" => id}) do

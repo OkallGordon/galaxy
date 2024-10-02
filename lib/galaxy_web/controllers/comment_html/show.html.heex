@@ -2,16 +2,22 @@
   Comment <%= @comment.id %>
   <:subtitle>This is a comments record from your database.</:subtitle>
   <:actions>
-    <.link href={~p"/comments/#{@comment}/edit"}>
+    <.link href={~p"/comments/#{@comment.id}/edit"}>
       <.button>Edit comment</.button>
     </.link>
   </:actions>
 </.header>
 
 <.list>
-  <:item title="Topic"><strong><%= @comment.topic %></strong></:item>
+  <:item title="Topic"><%= @comment.topic %></:item> <!-- If topic is a string -->
   <:item title="Comment"><%= @comment.comment %></:item>
   <:item title="User ID"><%= @comment.user_id %></:item>
 </.list>
+
+<%= if is_map(@comment.topic) and Map.has_key?(@comment.topic, :summary) do %>
+  <.list>
+    <:item title="Summary"><%= Map.get(@comment.topic, :summary, "No summary available") %></:item>
+  </.list>
+<% end %>
 
 <.back navigate={~p"/comments"}>Back to comments</.back>

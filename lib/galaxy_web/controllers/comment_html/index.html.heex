@@ -1,15 +1,19 @@
-<.header>
-  Listing Comments
-  <:actions>
+<header>
+  <h1>Listing Comments</h1>
+  <div>
     <.link href={~p"/comments/new"}>
       <.button>New Comment</.button>
     </.link>
-  </:actions>
-</.header>
+  </div>
+</header>
 
 <.table id="comment" rows={@comments} row_click={&JS.navigate(~p"/comments/#{&1}")}>
-  <:col :let={comment} label="Topic"><%= comment.topic %></:col>
-  <:col :let={comment} label="Comment"><%= comment.comment %></:col>
+  <:col :let={comment} label="Topic">
+    <%= comment.topic %>
+  </:col>
+  <:col :let={comment} label="Comment">
+    <%= comment.comment %>
+  </:col>
   <:action :let={comment}>
     <div class="sr-only">
       <.link navigate={~p"/comments/#{comment.id}"}>Show</.link>
@@ -17,15 +21,63 @@
     <.link navigate={~p"/comments/#{comment.id}/edit"}>Edit</.link>
   </:action>
   <:action :let={comment}>
-    <form
-      action={~p"/comments/#{comment.id}"}
-      method="post"
-      data-confirm="Are you sure?"
-      class="inline"
-    >
+    <form action={~p"/comments/#{comment.id}"} method="post" data-confirm="Are you sure?" class="inline">
       <input type="hidden" name="_method" value="delete" />
       <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
       <button type="submit" class="button">Delete</button>
     </form>
   </:action>
 </.table>
+
+<br>
+
+<!-- Move the button below the table -->
+<div>
+  <.button id="summarizeButton" class="button">Summarize Comments</.button>
+</div>
+<br>
+
+<!-- Section to display the summary -->
+<div id="summarySection" style="display: none;">
+  <h2><strong><em>Dear <%= @user_name %>, below are your summarized comments</em></strong></h2>
+  <ul id="summaryText" style="list-style-type: none; padding: 0;"></ul>
+  <p id="conclusion" style="margin-top: 20px;"></p>
+</div>
+
+<script>
+  document.getElementById("summarizeButton").addEventListener("click", function() {
+    const comments = Array.from(document.querySelectorAll("tbody tr")); // Select all rows in the comments table
+    const summaryList = document.getElementById("summaryText"); // Get the summary list element
+    summaryList.innerHTML = ''; // Clear previous summary content
+
+    let conclusionText = []; // Array to store topics for the conclusion
+
+    comments.forEach((row, index) => {
+      const topic = row.cells[0].innerText; // Assuming the first cell contains the topic
+      const commentText = row.cells[1].innerText; // Assuming the second cell contains the comment
+
+      // Create a concise and coherent summary with bold topic
+      const summarizedComment = `Regarding the topic "<strong>${topic}</strong>", the user expressed: "${commentText.trim()}"`;
+
+      // Create a new list item for each summarized comment
+      const listItem = document.createElement("li");
+      listItem.innerHTML = summarizedComment; // Use innerHTML to allow bold formatting
+
+      // Add some space between the first point and the next
+      if (index > 0) {
+        listItem.style.marginTop = "10px"; // Space between summarized comments
+      }
+
+      summaryList.appendChild(listItem); // Add the list item to the summary list
+
+      conclusionText.push(topic); // Collect topics for the conclusion
+    });
+    
+    // Generate a conclusion based on summarized comments
+    const uniqueTopics = [...new Set(conclusionText)]; // Get unique topics
+    document.getElementById("conclusion").innerText = `In conclusion, these comments reflect the following topics: ${uniqueTopics.join(", ")}.`;
+    
+    // Display the summary section
+    document.getElementById("summarySection").style.display = "block"; // Show the summary section
+  });
+</script>
