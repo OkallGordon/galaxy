@@ -4,7 +4,7 @@ defmodule Galaxy.GeminiClient do
   """
 
   @api_url "https://api.gemini.ai/summarize"
-  @api_key "AIzaSyBc8D-YqAGkYJ0GJ9NabGOok5eQ5uNAtAE" # Your API key
+  @api_key "input your api key here" # Your API key
 
   def summarize_comments(comments) when is_list(comments) do
     payload = %{comments: comments}
