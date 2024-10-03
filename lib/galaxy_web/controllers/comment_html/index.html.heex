@@ -1,11 +1,11 @@
-<header>
-  <h1>Listing Comments</h1>
-  <div>
+<.header>
+  <h1><strong>Listing Comments</strong></h1><br>
+  <:actions>
     <.link href={~p"/comments/new"}>
       <.button>New Comment</.button>
     </.link>
-  </div>
-</header>
+  </:actions>
+</.header>
 
 <.table id="comment" rows={@comments} row_click={&JS.navigate(~p"/comments/#{&1}")}>
   <:col :let={comment} label="Topic">
