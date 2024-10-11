@@ -33,6 +33,10 @@
         <li> 
            <a href={~p"/comments"} class="hover:text-zinc-700"> User's Comment</a>
            </li>
+
+        <li>  
+           <a href={~p"/polls"} class="hover:text-zinc-700"> Vote Here</a>
+           </li>
         <li>
           <form action={~p"/sessions/#{@current_user.id}"} method="post" class="inline">
             <input type="hidden" name="_method" value="delete">

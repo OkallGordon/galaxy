@@ -1,0 +1,21 @@
+<h1><strong>Polls</strong></h1>
+<br>
+
+<%= for poll <- @polls do %>
+  <div>
+    <h2><em><strong><%= poll.question %></strong></em></h2>
+    <p>Yes Votes: <%= poll.yes_votes %></p>
+    <p>No Votes: <%= poll.no_votes %></p>
+    
+    <!-- Making the "Vote" link look like a button -->
+    <.link navigate={~p"/polls/#{poll.id}"} class="btn btn-primary">
+      <strong>Vote</strong>
+    </.link>
+  </div>
+<% end %>
+
+<!-- Making the "Create New Poll" link look like a button -->
+<br>
+<.link navigate={~p"/polls/new"} class="btn btn-success">
+  <strong>Create New Poll</strong>
+</.link>

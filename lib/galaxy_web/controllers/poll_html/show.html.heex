@@ -1,0 +1,14 @@
+<h1><%= @poll.question %></h1>
+
+<p>
+ <strong> Yes Votes: </strong><%= @poll.yes_votes %><br>
+ <br>
+  <strong>No Votes: </strong> <%= @poll.no_votes %>
+</p>
+
+<.form for={%{}} action={~p"/polls/#{@poll.id}/vote"} method="post">
+  <button type="submit" name="vote" value="yes" class="btn btn-success">Vote Yes</button>
+  <button type="submit" name="vote" value="no" class="btn btn-danger">Vote No</button>
+</.form>
+
+<.link navigate={~p"/polls"}>Back to Polls</.link>

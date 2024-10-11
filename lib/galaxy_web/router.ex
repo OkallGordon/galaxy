@@ -26,15 +26,20 @@ defmodule GalaxyWeb.Router do
     post "/users", UserController, :create
     get "/users/:id/edit", UserController, :edit
     put "/users/:id", UserController, :update
-    get "/users/:id/", UserController, :show
+    get "/users/:id", UserController, :show
     delete "/users/:id", UserController, :delete
+
     resources "/sessions", SessionController, only: [:new, :create, :delete]
     get "/watch/:id", WatchController, :show
     resources "/annotations", AnnotationController, only: [:create]
 
     resources "/comments", CommentController do
-      # Add the summarize route here
       post "/:id/summarize", CommentController, :summarize, as: :summarize
+    end
+
+    # Poll routes for creating, voting, and displaying results
+    resources "/polls", PollController do
+      post "/:id/vote", PollController, :vote, as: :vote  # Voting route
     end
   end
 
