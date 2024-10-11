@@ -1,14 +1,27 @@
-<h1><%= @poll.question %></h1>
+<div class="container mt-5">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <!-- Question Title -->
+      <h1 class="card-title text-center"><%= @poll.question %></h1>
+      
+      <!-- Votes Section -->
+      <div class="text-center my-4">
+        <p><strong>Yes Votes:</strong> <%= @poll.yes_votes %></p>
+        <p><strong>No Votes:</strong> <%= @poll.no_votes %></p>
+      </div>
 
-<p>
- <strong> Yes Votes: </strong><%= @poll.yes_votes %><br>
- <br>
-  <strong>No Votes: </strong> <%= @poll.no_votes %>
-</p>
+      <!-- Voting Form -->
+      <div class="text-center">
+        <.form for={%{}} action={~p"/polls/#{@poll.id}/vote"} method="post">
+          <button type="submit" name="vote" value="yes" class="btn btn-success mx-2">Vote Yes</button>
+          <button type="submit" name="vote" value="no" class="btn btn-danger mx-2">Vote No</button>
+        </.form>
+      </div>
 
-<.form for={%{}} action={~p"/polls/#{@poll.id}/vote"} method="post">
-  <button type="submit" name="vote" value="yes" class="btn btn-success">Vote Yes</button>
-  <button type="submit" name="vote" value="no" class="btn btn-danger">Vote No</button>
-</.form>
-
-<.link navigate={~p"/polls"}>Back to Polls</.link>
+      <!-- Back to Polls Link -->
+      <div class="text-center mt-4">
+        <.link navigate={~p"/polls"} class="btn btn-secondary">Back to Polls</.link>
+      </div>
+    </div>
+  </div>
+</div>

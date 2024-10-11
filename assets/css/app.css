@@ -22,26 +22,195 @@
     color: #ffffff; /* Lighter gray text */
   }
 
+  /* General body styling *
+/* Container for the poll section */
+.poll-container {
+  max-width: 800px; /* Set a maximum width for readability */
+  margin: 0 auto; /* Center the container */
+  padding: 20px; /* Padding around the container */
+  background-color: #f8f9fa; /* Light background color for the container */
+  border-radius: 10px; /* Rounded corners for the container */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+}
+
+/* Title styles */
+h1 {
+  text-align: center; /* Center the title */
+  color: #333; /* Dark color for title text */
+  margin-bottom: 20px; /* Space below title */
+  font-size: 2rem; /* Font size for title */
+}
+
+/* Individual poll styling */
+div {
+  border: 1px solid #ced4da; /* Border around each poll */
+  border-radius: 8px; /* Rounded corners for each poll */
+  padding: 15px; /* Padding inside each poll */
+  margin-bottom: 15px; /* Space between polls */
+  background-color: #ffffff; /* White background for each poll */
+}
+
+/* Question styling */
+h2 {
+  font-size: 1.5rem; /* Font size for the question */
+  color: #007bff; /* Color for question text */
+  margin-bottom: 10px; /* Space below question */
+}
+
+/* Vote count styling */
+p {
+  font-size: 1rem; /* Font size for vote counts */
+  color: #555; /* Gray color for vote count text */
+  margin: 5px 0; /* Space between vote counts */
+}
+
+/* Button styles for links */
+.btn {
+  display: inline-block; /* Inline-block for button effect */
+  padding: 10px 15px; /* Padding inside the buttons */
+  font-weight: bold; /* Bold text for buttons */
+  text-align: center; /* Center text in buttons */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners for buttons */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  text-decoration: none; /* Remove underline from links */
+}
+
+/* Primary button style (for voting) */
+.btn-primary {
+  background-color: #007bff; /* Bootstrap primary color */
+  color: white; /* White text */
+}
+
+/* Success button style (for creating new poll) */
+.btn-success {
+  background-color: #28a745; /* Bootstrap success color */
+  color: white; /* White text */
+}
+
+/* Hover effect for buttons */
+.btn:hover {
+  opacity: 0.9; /* Slight transparency on hover */
+}
+
+/* Add some margin between the buttons */
+.btn + .btn {
+  margin-left: 10px; /* Space between buttons */
+}
+
   
-  .table {
-    width: 100%;
-    margin-bottom: 1rem;
-    color: #212529;
-  }
-  
-  .table th,
-  .table td {
-    padding: 0.75rem;
-    vertical-align: top;
-    border-top: 1px solid #dee2e6;
-  }
-  
-  .table th {
-    background-color: #f8f9fa;
-    color: #495057;
-  }
-  
-  .btn {
-    margin-right: 5px;
-  }
-  
+  /* Styles for the poll creation form */
+.form-group {
+  margin-bottom: 15px; /* Space between form elements */
+}
+
+label {
+  display: block; /* Labels should be block elements */
+  font-weight: bold; /* Bold labels for emphasis */
+  margin-bottom: 5px; /* Space below the label */
+}
+
+.form-control {
+  width: 100%; /* Full width for input fields */
+  padding: 10px; /* Padding inside input fields */
+  border: 1px solid #ced4da; /* Border color */
+  border-radius: 5px; /* Rounded corners for inputs */
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle inner shadow */
+  font-size: 16px; /* Font size for input text */
+}
+
+/* Focus state for input fields */
+.form-control:focus {
+  border-color: #80bdff; /* Border color on focus */
+  outline: none; /* Remove default outline */
+  box-shadow: 0 0 5px rgba(128, 189, 255, 0.5); /* Glow effect on focus */
+}
+
+/* Centered button styling */
+.text-center {
+  text-align: center; /* Center button */
+}
+
+/* Add transition effect for buttons */
+.btn {
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+}
+
+.btn:hover {
+  transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+/* Flash message styling, if needed */
+.flash-message {
+  background-color: #d4edda; /* Light green background */
+  color: #155724; /* Dark green text */
+  padding: 10px;
+  border: 1px solid #c3e6cb; /* Green border */
+  border-radius: 5px;
+  margin-bottom: 20px; /* Space below flash messages */
+  text-align: center; /* Centered flash messages */
+}
+/* Container for the sections */
+.section-container {
+  max-width: 800px; /* Set a maximum width for readability */
+  margin: 20px auto; /* Center the container */
+  padding: 20px; /* Padding around the container */
+  background-color: #f8f9fa; /* Light background color for the container */
+  border-radius: 10px; /* Rounded corners for the container */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+}
+
+/* Title styles */
+.section-title {
+  text-align: center; /* Center the title */
+  color: #333; /* Dark color for title text */
+  margin-bottom: 20px; /* Space below title */
+  font-size: 2rem; /* Font size for title */
+}
+
+/* Sub-title styles for categories */
+.sub-title {
+  font-size: 1.5rem; /* Font size for sub-title */
+  color: #007bff; /* Color for sub-title text */
+  margin: 15px 0; /* Space above and below sub-title */
+}
+
+/* Button styles for links */
+.btn {
+  display: inline-block; /* Inline-block for button effect */
+  padding: 10px 15px; /* Padding inside the buttons */
+  font-weight: bold; /* Bold text for buttons */
+  text-align: center; /* Center text in buttons */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners for buttons */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  text-decoration: none; /* Remove underline from links */
+}
+
+/* Button color styles */
+.btn-primary {
+  background-color: #007bff; /* Bootstrap primary color */
+  color: white; /* White text */
+}
+
+.btn-secondary {
+  background-color: #6c757d; /* Bootstrap secondary color */
+  color: white; /* White text */
+}
+
+.btn-success {
+  background-color: #28a745; /* Bootstrap success color */
+  color: white; /* White text */
+}
+
+/* Hover effect for buttons */
+.btn:hover {
+  opacity: 0.9; /* Slight transparency on hover */
+}
+
+/* Add some margin between the buttons */
+.btn + .btn {
+  margin-left: 10px; /* Space between buttons */
+}

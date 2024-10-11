@@ -1,22 +1,20 @@
-<.header>
-  Create Poll
-  <:subtitle><em>Use this form to create a new poll.</em></:subtitle>
-</.header>
-
-<.form for={@changeset} action={~p"/polls"} method="post">
-  <div>
-    <label for="poll_question"><strong>Question:</strong></label>
-    <input type="text" name="poll[question]" id="poll_question" value={@changeset.data.question} required />
+<div class="container">
+  <div class="card">
+    <h2 class="card-title">Create Poll</h2>
+    <p class="text-center">Use this form to create a new poll.</p>
+    
+    <form action="/polls" method="POST">
+      <div class="form-group">
+        <label for="question">Question:</label>
+        <input type="text" id="question" name="poll[question]" required class="form-control" placeholder="Enter your question here">
+      </div>
+      <div class="form-group">
+        <label for="options">Options:</label>
+        <input type="text" id="options" name="poll[options]" required class="form-control" placeholder="Comma-separated options">
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-success">Create Poll</button>
+      </div>
+    </form>
   </div>
-  <br>
-  <div>
-    <label for="poll_options"><strong>Options:</strong></label>
-    <input type="text" name="poll[options]" id="poll_options" placeholder="Comma-separated options" required />
-  </div>
-  <br>
-  <div>
-    <.button type="submit">Create Poll</.button>
-  </div>
-</.form>
-
-<.back navigate={~p"/polls"}>Back to Polls</.back>
+</div>

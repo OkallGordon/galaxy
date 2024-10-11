@@ -37,10 +37,11 @@ defmodule GalaxyWeb.Router do
       post "/:id/summarize", CommentController, :summarize, as: :summarize
     end
 
-    # Poll routes for creating, voting, and displaying results
-    resources "/polls", PollController do
-      post "/:id/vote", PollController, :vote, as: :vote  # Voting route
-    end
+    # Poll routes for creating, editing, and displaying polls
+    resources "/polls", PollController
+
+    # Custom voting route
+    post "/polls/:id/vote", PollController, :vote, as: :vote  # Voting route
   end
 
   scope "/", GalaxyWeb do
@@ -54,11 +55,6 @@ defmodule GalaxyWeb.Router do
 
     resources "/videos", VideoController
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", GalaxyWeb do
-  #   pipe_through :api
-  # end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:galaxy, :dev_routes) do

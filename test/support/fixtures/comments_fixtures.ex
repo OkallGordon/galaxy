@@ -7,14 +7,14 @@ defmodule Galaxy.CommentsFixtures do
   @doc """
   Generate a comment.
   """
-  def comment_fixture(attrs \\ %{}) do
+  def comment_fixture(user, attrs \\ %{}) do
     {:ok, comment} =
       attrs
       |> Enum.into(%{
         comment: "some comment",
         topic: "some topic"
       })
-      |> Galaxy.Comments.create_user_comment()
+      |> Galaxy.Comments.create_user_comment(user)  # Pass the user as the first argument
 
     comment
   end

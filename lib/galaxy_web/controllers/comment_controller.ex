@@ -36,10 +36,13 @@ defmodule GalaxyWeb.CommentController do
   def create(conn, %{"comment" => comment_params}) do
     current_user = get_current_user(conn)
 
+    # Exclude user_id from comment_params to prevent duplication
+    comment_params = Map.drop(comment_params, ["user_id"])
+
     case Comments.create_user_comment(current_user, comment_params) do
       {:ok, comment} ->
         # Fetch all comments related to the same topic
-        topic_comments = Repo.all(from c in Comment, where: c.topic_id == ^comment_params["topic_id"])
+        topic_comments = Repo.all(from c in Comment, where: c.topic == ^comment_params["topic"])
 
         # Extract the comment texts for summarization
         comment_texts = Enum.map(topic_comments, & &1.comment)
@@ -48,7 +51,7 @@ defmodule GalaxyWeb.CommentController do
         case GeminiClient.summarize_comments(comment_texts) do
           {:ok, summary} ->
             # Save the summary in the topic record
-            topic = Repo.get!(Topic, comment_params["topic_id"])
+            topic = Repo.get!(Topic, comment_params["topic"])
             Repo.update!(Topic.changeset(topic, %{summary: summary}))
 
             # Redirect with a success message
@@ -69,7 +72,9 @@ defmodule GalaxyWeb.CommentController do
     end
   end
 
-  def edit(conn, %{"id" => id}) do
+
+
+    def edit(conn, %{"id" => id}) do
     current_user = get_current_user(conn)
     comment = Comments.get_user_comment!(current_user, id)
     changeset = Comments.change_comment(comment)

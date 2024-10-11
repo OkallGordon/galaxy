@@ -61,12 +61,14 @@ defmodule Galaxy.Comments do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_user_comment(%Accounts.User{} = user, attrs \\ %{}) do
-    %Comment{}
-    |> Comment.changeset(attrs)
-    |> Ecto.Changeset.put_assoc(:user, user)
-    |> Repo.insert()
-  end
+ def create_user_comment(current_user, attrs) do
+  attrs = Map.put(attrs, "user_id", current_user.id)  # Set the user_id from the current user
+
+  %Comment{}
+  |> Comment.changeset(attrs)
+  |> Repo.insert()
+end
+
 
   @doc """
   Updates a comment.
