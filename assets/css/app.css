@@ -4,23 +4,87 @@
 @import "./video.css";
 
 /* This file is for your main application CSS */
-.phx-hero {
-    background-color: #000000; /* Light gray background */
-    text-align: center; /* Center align text */
-    padding: 50px 20px; /* Add padding to the section */
-    border-radius: 8px; /* Slightly round the corners */
-  }
-  
-  .phx-hero h1 {
-    font-size: 2.5em; /* Increase the font size of the heading */
-    margin-bottom: 20px; /* Add space below the heading */
-    color: #ffffff; /* Dark gray text */
-  }
-  
-  .phx-hero p {
-    font-size: 1.2em; /* Slightly increase the font size of the paragraph */
-    color: #ffffff; /* Lighter gray text */
-  }
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  color: #0a0909;
+  padding: 20px;
+}
+
+/* Header Styling */
+header {
+  background-color: #2fb934;
+  color: white;
+  text-align: center;
+  padding: 20px 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+/* Navigation Buttons */
+nav a {
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  margin: 0 5px;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+nav a:hover {
+  background-color: #555;
+}
+
+/* Main Section Styling */
+main {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+main h1 {
+  color: #07c90d;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+main p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+/* Buttons for User Actions */
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+footer {
+  margin-top: 20px;
+  text-align: center;
+  color: #777;
+}
+
 
   /* General body styling *
 /* Container for the poll section */

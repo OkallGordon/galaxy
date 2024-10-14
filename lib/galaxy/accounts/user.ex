@@ -20,8 +20,8 @@ defmodule Galaxy.Accounts.User do
     user
     |> cast(attrs, [:name, :email, :version, :password])
     |> validate_required([:email, :name])
-    |> validate_length(:name, min: 4, max: 10)
-    |> validate_length(:email, max: 20)
+    |> validate_length(:name, min: 10, max: 20)
+    |> validate_length(:email, max: 50)
     |> validate_format(:email, ~r/@/, message: "Email must contain @")
     |> put_password_hash()
     |> unique_constraint(:email)
