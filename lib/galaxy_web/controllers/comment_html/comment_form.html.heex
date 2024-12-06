@@ -10,7 +10,7 @@
   <.input field={f[:comment]} type="text" label="Comment" />
 
   <!-- Input for topic_id (hidden input) -->
-  <.input field={f[:topic_id]} type="hidden" />
+  <.input field={f[:topic_id]} type="number" />
 
   <!-- Dropdown to select the user adding the comment -->
   <.input field={f[:user_id]} type="select" options={Enum.map(@users, &{&1.name, &1.id})} label="User" prompt="Select a User" />
